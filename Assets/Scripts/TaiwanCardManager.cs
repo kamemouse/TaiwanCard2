@@ -47,17 +47,12 @@ public class TaiwanCardManager : MonoBehaviour {
         // このとき、"(任意の文字列)"の部分が関数の引数として渡される。
         webView.Init((string msg) => {
 			KX.D(DEBUG, "Call from Web view : " + msg);
-            //DebugText.text = msg;
         });
-		// TODO URL直す
         webView.LoadURL("file://" + htmlFilePath);
-//		webView.LoadHTML(html, "about:blank");
-//		webView.LoadURL("http://www.google.com");  
 
 		var rectTransform = webView.GetComponent<RectTransform> ();
 		AdjustWebViewMargin (webView, rectTransform);
         webView.SetVisibility(true);
-//        webView.SetMargins(10, 10, 10, 10);
     }
 
     private string GeneratePrepareHTML()
