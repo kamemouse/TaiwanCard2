@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Net.Kixmate.KixUtility;
 
 public class TaiwanCardManager : MonoBehaviour {
+	const bool DEBUG = true;
+
     [SerializeField]
     WebViewObject webView = null;
 
@@ -21,7 +24,7 @@ public class TaiwanCardManager : MonoBehaviour {
     {
         // WebView表示用にHTMLファイルを用意する
         htmlFilePath = Path.Combine(Application.persistentDataPath, "description.html");
-        Debug.Log(htmlFilePath);
+		KX.D (DEBUG, "htmlFilePath={0}", htmlFilePath);
 
         // HTMLファイルに初期表示するHTMLを生成
         string html = GeneratePrepareHTML();
@@ -43,7 +46,7 @@ public class TaiwanCardManager : MonoBehaviour {
         // 'unit:(任意の文字列)' のように指定すると、コールバック関数が呼び出される。
         // このとき、"(任意の文字列)"の部分が関数の引数として渡される。
         webView.Init((string msg) => {
-            Debug.Log("Call from Web view : " + msg);
+			KX.D(DEBUG, "Call from Web view : " + msg);
             //DebugText.text = msg;
         });
 		// TODO URL直す
@@ -161,7 +164,7 @@ Hello unity-webview !!!<br/>
 
 		// Webview表示
 		webViewObject.SetMargins(marginL, marginT, marginR, marginB);
-		Debug.LogFormat (this, "margin[L,T,R,B]=[{0},{1},{2},{3}]", marginL, marginT, marginR, marginB);
+		KX.D(DEBUG, "margin[L,T,R,B]=[{0},{1},{2},{3}]", marginL, marginT, marginR, marginB);
 	}
 
 
