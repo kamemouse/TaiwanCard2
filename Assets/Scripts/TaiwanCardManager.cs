@@ -141,6 +141,7 @@ Hello unity-webview !!!<br/>
   <style>
     img {
       width: 50%;
+      float: left;
     }
   </style>
 </head>
