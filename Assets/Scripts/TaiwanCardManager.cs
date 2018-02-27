@@ -142,6 +142,7 @@ Hello unity-webview !!!<br/>
     img {
       width: 50%;
       float: left;
+      margin: 5px;
     }
   </style>
 </head>
@@ -259,6 +260,8 @@ Hello unity-webview !!!<br/>
 		//   Card.ImageUrl = json.DescriptionImage.url;
 		//   Card.Tags = json.Tags;
 		// }
+		dbm = new DBManager ();
+		CurrentCard = dbm.DebugGetFirstData();
 
 		if (callback != null) {
 			callback.Invoke (err);

@@ -3,6 +3,13 @@
 public class DBManager
 {
 	public string updateDate;
+
+	// Debug用
+	public DBManager()
+	{
+		
+	}
+
 	public DBManager (string updateDate)
 	{
 		// TODO updateDateを元にデータを更新
@@ -13,6 +20,13 @@ public class DBManager
 
 	public void Initialize(){
 		// 
+	}
+
+	public Card DebugGetFirstData(){
+		Card card = new Card();
+
+
+		return card;
 	}
 
 //	public string GetUpdatedJson(string updateDate){
