@@ -19,7 +19,9 @@ public class TaiwanCardManager : MonoBehaviour
 
 	string htmlFilePath;
 
-	Card CurrentCard;
+
+    DBManager dbm;
+    Card CurrentCard;
 
 	// Use this for initialization
 	void Start ()
@@ -32,9 +34,9 @@ public class TaiwanCardManager : MonoBehaviour
 		CurrentCard = LoadLocalCardData ();
 		RefreshCard (CurrentCard);
 
-		// サーバデータの更新チェック
-		UpdateDictionary (onDictionaryUpdated);
-	}
+        // サーバデータの更新チェック
+        UpdateDictionary(onDictionaryUpdated);
+    }
 
 	void onDictionaryUpdated (string err = "")
 	{
@@ -133,7 +135,8 @@ Hello unity-webview !!!<br/>
 
 	string GenerateHTML (string text, string imagePath = "")
 	{
-		string imgTag = imagePath != "" ? "<img src='./" + imagePath + "' />" : "";
+		string imgTag = imagePath != "" ? "<img src='" + imagePath + "' />" : "";
+		KX.D (DEBUG, "imgTag = {0}", imgTag);
 		string html =
 			@"<html>
 <head>
@@ -169,8 +172,8 @@ Hello unity-webview !!!<br/>
 		var localPos = rectTransform.transform.localPosition;
 		var localScale = rectTransform.transform.localScale;
 
-		// "Background"を写すカメラ
-		var camera = transform.GetComponent<Camera> ();
+//		// "Background"を写すカメラ
+//		var camera = transform.GetComponent<Camera> ();
 
 		//		// "Background"の左下と右上のローカル座標(UIWidget.PivotはCenter前提とする)
 		//		var localLB = new Vector3(localPos.x - background.width * 0.5f * localScale.x, localPos.y - background.height * 0.5f * localScale.y, 0f);
@@ -179,16 +182,16 @@ Hello unity-webview !!!<br/>
 		// "Background"の左下と右上のワールド座標
 		var worldCorners = new Vector3[4];
 		rectTransform.GetWorldCorners (worldCorners);
-		var worldLB = worldCorners [0];
-		var worldRT = worldCorners [2];
+//		var worldLB = worldCorners [0];
+//		var worldRT = worldCorners [2];
 
 		// "Background"の左下と右上のスクリーン座標
 		//var screenLB = camera.WorldToScreenPoint(worldLB);
 		//var screenRT = camera.WorldToScreenPoint(worldRT);
 		var localCorners = new Vector3[4];
 		rectTransform.GetLocalCorners (localCorners);
-		var screenLB = localCorners [0];
-		var screenRT = localCorners [2];//camera.WorldToScreenPoint(worldRT);
+//		var screenLB = localCorners [0];
+//		var screenRT = localCorners [2];//camera.WorldToScreenPoint(worldRT);
 
 		// マージンの計算
 //		int marginL = (int)(screenLB.x);
@@ -239,6 +242,8 @@ Hello unity-webview !!!<br/>
 
 	void UpdateDictionary (Action<string> callback)
 	{
+		KX.D (DEBUG, "UpdateDictionary Start");
+
 		var err = "";
 		// var 最終更新日 = 最終更新日
 
@@ -261,14 +266,15 @@ Hello unity-webview !!!<br/>
 		//   Card.Tags = json.Tags;
 		// }
 		dbm = new DBManager ();
+        dbm.Initialize();
 		CurrentCard = dbm.DebugGetFirstData();
 
 		if (callback != null) {
+			KX.D (DEBUG, "UpdateDictionary - callback Invoke");
 			callback.Invoke (err);
 		}
+		KX.D (DEBUG, "UpdateDictionary End");
 	}
-
-	DBManager dbm;
 
 	string GetUpdatedDataFromDB (string updateDate)
 	{
@@ -289,5 +295,15 @@ Hello unity-webview !!!<br/>
 				return;
 			}
 		}
+	}
+
+	public void OnTapNext(){
+		CurrentCard = dbm.Next();
+		RefreshCard(CurrentCard);
+	}
+
+	public void OnTapPrev(){
+		CurrentCard = dbm.Prev();
+		RefreshCard(CurrentCard);
 	}
 }
