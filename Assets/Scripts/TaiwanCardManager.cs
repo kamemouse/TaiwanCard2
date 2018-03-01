@@ -100,9 +100,10 @@ public class TaiwanCardManager : MonoBehaviour
 
 	string GeneratePrepareHTML ()
 	{
-		string html = 
+		string html =
 			@"<html>
 <head>
+  <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <style>
     body { background: red; }
@@ -140,6 +141,7 @@ Hello unity-webview !!!<br/>
 		string html =
 			@"<html>
 <head>
+	<meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <style>
     img {
